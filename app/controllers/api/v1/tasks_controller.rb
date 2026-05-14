@@ -51,6 +51,7 @@ class Api::V1::TasksController < ApplicationController
           id: comment.id,
           content: comment.content,
           task_update_info: comment.task_update_info,
+          created_at: comment.created_at.strftime("%Y-%m-%d %H:%M:%S"),
           user: {
             id: comment.user.id,
             name: comment.user.name

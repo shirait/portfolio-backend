@@ -33,6 +33,23 @@ class Api::V1::TasksController < ApplicationController
     render(json: task_json(task))
   end
 
+  def update
+    task = Task.find(params[:id])
+
+    Task.transaction do
+      before_update = task_update_snapshot(task)
+
+      task.update!(task_update_params)
+      task.comments.create!(
+        content: comment_content,
+        task_update_info: task_update_info(before_update, task),
+        user: current_user
+      )
+    end
+
+    render(json: task_json(Task.preload(:user, {comments: :user}).find(task.id)))
+  end
+
   private
 
   def task_json(task)
@@ -63,6 +80,33 @@ class Api::V1::TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:title, :description, :status, :due_date, :user_id)
+  end
+
+  def task_update_params
+    params.require(:task).permit(:status, :due_date, :user_id)
+  end
+
+  def comment_content
+    params.require(:comment).require(:content)
+  end
+
+  def task_update_snapshot(task)
+    {
+      status: task.status,
+      due_date: task.due_date&.strftime("%Y-%m-%d"),
+      user_id: task.user_id
+    }
+  end
+
+  def task_update_info(before_update, task)
+    changes = []
+    current_due_date = task.due_date&.strftime("%Y-%m-%d")
+
+    changes << "ステータス: #{before_update[:status]} → #{task.status}" if before_update[:status] != task.status
+    changes << "期日: #{before_update[:due_date] || '-'} → #{current_due_date || '-'}" if before_update[:due_date] != current_due_date
+    changes << "担当者ID: #{before_update[:user_id]} → #{task.user_id}" if before_update[:user_id] != task.user_id
+
+    changes.presence&.join(", ") || "コメントしました"
   end
 
   def set_pagination_headers(total_count, current_page, current_limit)

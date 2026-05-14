@@ -28,7 +28,7 @@ class Api::V1::TasksController < ApplicationController
   end
 
   def show
-    task = Task.preload(:user, {comments: :user}).find(params[:id])
+    task = Task.preload(:user, { comments: :user }).find(params[:id])
 
     render(json: task_json(task))
   end
@@ -47,7 +47,7 @@ class Api::V1::TasksController < ApplicationController
       )
     end
 
-    render(json: task_json(Task.preload(:user, {comments: :user}).find(task.id)))
+    render(json: task_json(Task.preload(:user, { comments: :user }).find(task.id)))
   end
 
   def destroy

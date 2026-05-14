@@ -1,4 +1,6 @@
 class Api::V1::TasksController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     # todo: 検索機能実装 （users.nameで検索できるよう、eager_loadに変更する。）
     # todo: ページネーション実装

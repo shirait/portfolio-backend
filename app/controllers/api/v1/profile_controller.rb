@@ -1,10 +1,12 @@
 class Api::V1::ProfileController < ApplicationController
+  before_action :authenticate_user!
+
   def show
     render(
       json: {
-        name: "Teruaki Shirai",
-        role: "Web Developer",
-        message: "Rails APIから取得したプロフィールです。"
+        id: current_user.id,
+        name: current_user.name,
+        role: current_user.role
       }
     )
   end

@@ -95,7 +95,7 @@ class Api::V1::TasksController < ApplicationController
   end
 
   def comment_content
-    params.require(:comment).require(:content)
+    params.require(:comment).permit(:content).fetch(:content)
   end
 
   def task_update_snapshot(task)

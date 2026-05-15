@@ -3,7 +3,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       get "profile", to: "profile#show"
       resources :tasks, only: [ :index, :create, :show, :update, :destroy ]
-      resources :users, only: [ :index ]
+      resources :users, only: [ :index ] do
+        get :options, on: :collection
+      end
     end
   end
 

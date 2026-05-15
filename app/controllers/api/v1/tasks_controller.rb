@@ -46,7 +46,7 @@ class Api::V1::TasksController < ApplicationController
       task.update!(task_update_params)
       task.comments.create!(
         content: comment_content,
-        task_update_info: task_update_info(before_update, task),
+        task_update_info: task.build_task_update_info(before_update),
         user: current_user
       )
     end
@@ -110,17 +110,6 @@ class Api::V1::TasksController < ApplicationController
       due_date: task.due_date&.strftime("%Y-%m-%d"),
       user_id: task.user_id
     }
-  end
-
-  def task_update_info(before_update, task)
-    changes = []
-    current_due_date = task.due_date&.strftime("%Y-%m-%d")
-
-    changes << "ステータス: #{before_update[:status]} → #{task.status}" if before_update[:status] != task.status
-    changes << "期日: #{before_update[:due_date] || '-'} → #{current_due_date || '-'}" if before_update[:due_date] != current_due_date
-    changes << "担当者ID: #{before_update[:user_id]} → #{task.user_id}" if before_update[:user_id] != task.user_id
-
-    changes.presence&.join(", ") || "コメントしました"
   end
 
   def set_pagination_headers(total_count, current_page, current_limit)

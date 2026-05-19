@@ -62,7 +62,7 @@ RSpec.describe Task, type: :model do
       end
 
       it 'does not filter when the keyword is blank' do
-        tasks = [create(:task, title: "タスクA"), create(:task, title: "タスクB", user: create(:user, email: "other@example.com"))]
+        tasks = [ create(:task, title: "タスクA"), create(:task, title: "タスクB", user: create(:user, email: "other@example.com")) ]
 
         expect(Task.search_by_title(nil)).to match_array(tasks)
         expect(Task.search_by_title("")).to match_array(tasks)
@@ -85,7 +85,7 @@ RSpec.describe Task, type: :model do
       end
 
       it 'does not filter when status is blank' do
-        tasks = [create(:task, status: :not_started), create(:task, status: :completed, user: create(:user, email: "other@example.com"))]
+        tasks = [ create(:task, status: :not_started), create(:task, status: :completed, user: create(:user, email: "other@example.com")) ]
 
         expect(Task.search_by_status(nil)).to match_array(tasks)
         expect(Task.search_by_status("")).to match_array(tasks)
@@ -141,7 +141,7 @@ RSpec.describe Task, type: :model do
       end
 
       it 'does not filter when user_id is blank' do
-        tasks = [create(:task), create(:task, user: create(:user, email: "other3@example.com"))]
+        tasks = [ create(:task), create(:task, user: create(:user, email: "other3@example.com")) ]
 
         expect(Task.search_by_user_id(nil)).to match_array(tasks)
         expect(Task.search_by_user_id("")).to match_array(tasks)

@@ -10,8 +10,7 @@ class Ability
 
   private
   def admin_abilities(user)
-    # can :manage, :all
-    can :read, :all # debug
+    can :manage, :all
   end
 
   def normal_abilities(user)

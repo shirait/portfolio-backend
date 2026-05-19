@@ -4,7 +4,7 @@ class User < ApplicationRecord
   has_many :tasks, dependent: :restrict_with_exception
   has_many :comments, dependent: :restrict_with_exception
 
-  enum :role, { normal: 0, admin: 1 }, validate: true
+  enum :role, { normal: 0, admin: 1, viewer: 2 }, validate: true
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable

@@ -8,6 +8,29 @@ class Task < ApplicationRecord
   validates :status, presence: true # 値の検証は enum 宣言の「validate: true」オプションで行われる
   validates :user_id, presence: true # 整合性（userが存在するか？）は外部キー制約に任せる
 
+  def update_snapshot
+    {
+      status: status,
+      due_date: due_date&.strftime("%Y-%m-%d"),
+      user_id: user_id
+    }
+  end
+
+  def record_update!(attributes:, comment_content:, user:)
+    transaction do
+      before_update = update_snapshot
+
+      update!(attributes)
+      comments.create!(
+        content: comment_content,
+        task_update_info: build_task_update_info(before_update),
+        user: user
+      )
+    end
+
+    self
+  end
+
   def build_task_update_info(before_update)
     changes = []
     current_due_date = due_date&.strftime("%Y-%m-%d")

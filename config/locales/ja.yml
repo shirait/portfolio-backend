@@ -10,6 +10,8 @@ ja:
         content: コメント
         task_update_info: 更新内容
     errors:
+      messages:
+        record_invalid: "バリデーションに失敗しました: %{errors}"
       models:
         task:
           attributes:

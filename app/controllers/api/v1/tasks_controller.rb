@@ -29,7 +29,7 @@ class Api::V1::TasksController < ApplicationController
 
     render(
       json: tasks.map { |task|
-        task_json(task)
+        as_api_json(task)
       }
     )
   end
@@ -38,7 +38,7 @@ class Api::V1::TasksController < ApplicationController
     task = Task.new(task_params)
 
     if task.save
-      render(json: task_json(task), status: :created)
+      render(json: as_api_json(task), status: :created)
     else
       render(json: { errors: task.errors.full_messages }, status: :unprocessable_entity)
     end
@@ -47,26 +47,19 @@ class Api::V1::TasksController < ApplicationController
   def show
     task = Task.preload(:user, { comments: :user }).find(params[:id])
 
-    render(json: task_json(task))
+    render(json: as_api_json(task))
   end
 
   def update
-    task = Task.find(params[:id])
+    @task.record_update!(
+      attributes: task_update_params,
+      comment_content: comment_content,
+      user: current_user
+    )
 
-    Task.transaction do
-      before_update = task_update_snapshot(task)
-
-      task.update!(task_update_params)
-      task.comments.create!(
-        content: comment_content,
-        task_update_info: task.build_task_update_info(before_update),
-        user: current_user
-      )
-    end
-    rescue ActiveRecord::RecordInvalid => e
-      render(json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity) and return
-
-    render(json: task_json(Task.preload(:user, { comments: :user }).find(task.id)))
+    render(json: as_api_json(Task.preload(:user, { comments: :user }).find(@task.id)))
+  rescue ActiveRecord::RecordInvalid => e
+    render(json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity)
   end
 
   def destroy
@@ -77,9 +70,7 @@ class Api::V1::TasksController < ApplicationController
 
   private
 
-  # todo: fat controllerになっているかもしれない。サービスクラスへの移譲を検討する。
-
-  def task_json(task)
+  def as_api_json(task)
     {
       id: task.id,
       title: task.title,
@@ -115,14 +106,6 @@ class Api::V1::TasksController < ApplicationController
 
   def comment_content
     params.require(:comment).permit(:content).fetch(:content)
-  end
-
-  def task_update_snapshot(task)
-    {
-      status: task.status,
-      due_date: task.due_date&.strftime("%Y-%m-%d"),
-      user_id: task.user_id
-    }
   end
 
   def set_pagination_headers(total_count, current_page, current_limit)

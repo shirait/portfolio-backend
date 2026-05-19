@@ -22,3 +22,10 @@ end
     user.role = 0
   end
 end
+
+User.find_or_create_by!(email: "viewer@example.com") do |user|
+  user.password = "password"
+  user.password_confirmation = "password"
+  user.name = "Viewer User"
+  user.role = 2
+end

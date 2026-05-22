@@ -1,37 +1,49 @@
 # Portfolio Backend
 
-タスク管理アプリのバックエンド(Rails API)です。
+タスク管理アプリのバックエンド(Rails API)です。<br>
 [フロントエンド（Next.js）](https://github.com/init-tshirai/portfolio-frontend) と組み合わせて利用します。
 
 ## デモ環境
-URL: https://portfolio-frontend-self-psi.vercel.app/
-メールアドレス: `normal@example.com`
+URL: https://portfolio-frontend-self-psi.vercel.app/ <br>
+メールアドレス: `normal@example.com` <br>
 パスワード: `password`
 
-※上記はフロントエンドのURLになります。
+※上記はフロントエンドのURLになります。<br>
 バックエンドのURLは公開していません。（API単体での利用は想定していないため）
 
 ---
 
 ## 目次
 
-- [使用技術](#使用技術)
-- [アーキテクチャ](#アーキテクチャ)
-- [ER 図](#er-図)
-- [API 設計](#api-設計)
-- [技術選定理由](#技術選定理由)
-- [ローカル環境でのセットアップ](#ローカル環境でのセットアップ)
-- [デプロイ（Railway）](#デプロイrailway)
-- [テスト](#テスト)
-- [最後に](#最後に)
+- [Portfolio Backend](#portfolio-backend)
+  - [デモ環境](#デモ環境)
+  - [目次](#目次)
+    - [使用技術](#使用技術)
+  - [アーキテクチャ](#アーキテクチャ)
+    - [認証・認可の流れ](#認証認可の流れ)
+  - [ER 図](#er-図)
+    - [ロールと権限（CanCanCan）](#ロールと権限cancancan)
+  - [API 設計](#api-設計)
+    - [認証（Devise JWT）](#認証devise-jwt)
+    - [API v1](#api-v1)
+      - [Profile](#profile)
+      - [Tasks](#tasks)
+      - [Users](#users)
+    - [エラーレスポンス](#エラーレスポンス)
+    - [ヘルスチェック](#ヘルスチェック)
+  - [技術選定理由](#技術選定理由)
+  - [ローカル環境でのセットアップ](#ローカル環境でのセットアップ)
+    - [前提](#前提)
+    - [手順](#手順)
+  - [デプロイ（Railway）](#デプロイrailway)
+  - [テスト](#テスト)
+  - [最後に](#最後に)
 
 ---
 
 ### 使用技術
 
-フロントエンド: Next.js, Tailwind CSS
-バックエンド: Ruby on Rails, MySQL
-インフラ: Vercel(Next.js), Railway(Ruby on Rails)
+フロントエンドの [使用技術](https://github.com/init-tshirai/portfolio-frontend/#%E4%BD%BF%E7%94%A8%E6%8A%80%E8%A1%93) をご参照ください。
 
 ---
 
@@ -65,8 +77,6 @@ flowchart LR
 2. フロント（Next.js） が `POST /auth/sign_in` を呼び、JWT を **httpOnly Cookie** に保存する
 3. 以降は Cookie からトークンを取り出し、`Authorization: Bearer <token>` 付きで API を呼ぶ
 4. API 側は **Devise JWT** で認証、**CanCanCan** で認可する
-
-> API 呼び出しは基本的に Next.js サーバー経由のため、ブラウザから Rails への直接リクエストは発生しません。
 
 ---
 
@@ -197,7 +207,7 @@ erDiagram
 | --------------- | --------------------- |
 | `title`         | タイトル部分一致              |
 | `status`        | ステータス                 |
-| `due_date_from` | 期日 From（ISO 8601 日付）  |
+| `due_date_from` | 期日 From  |
 | `due_date_to`   | 期日 To                 |
 | `user_id`       | 担当者 ID                |
 | `page`          | ページ番号（デフォルト: 1）       |
@@ -206,7 +216,7 @@ erDiagram
 
 **ページネーション（レスポンスヘッダー）**
 
-本文はタスク配列のみ。メタ情報はヘッダーで返します。
+bodyはタスク配列のみ。メタ情報はheaderで返します。
 
 
 | ヘッダー             | 説明         |
@@ -216,25 +226,6 @@ erDiagram
 | `X-Per-Page`     | 1 ページあたり件数 |
 | `X-Total-Pages`  | 総ページ数      |
 
-
-**タスク status の値**
-
-`not_started` / `in_progress` / `resolved` / `completed` / `feedback` / `rejected`
-
-**更新（PATCH）リクエスト例**
-
-```json
-{
-  "task": {
-    "status": "in_progress",
-    "due_date": "2026-06-01",
-    "user_id": 1
-  },
-  "comment": {
-    "content": "着手しました"
-  }
-}
-```
 
 #### Users
 
@@ -342,14 +333,5 @@ $ bundle exec rspec
 
 ## 最後に
 
-本アプリケーションは、機能規模だけで言えばRails単体で十分実現可能ですが、
-実務で多い「Rails API + フロントエンド」の構成を一通り設計・実装することを目的として作成しました。
-
-認証、認可の実装方法や、フロントとバックエンドの責務の組み立てに苦労しました。
-将来的に別のクライアント（モバイルアプリなど）が追加された場合も再利用ように、基本的にバックエンドに任せるようにしています。
-
-「Rais API + フロントエンド」の構成はRails単体に比べて環境や言語が分かれるため、デメリットもあると考えます。
-・運用負担向上（環境変数の管理、セキュリティ設定の複雑化）
-・可用性低下の危険
-・開発要員確保の難易度増（組織による）
-アプリケーションの目的・性質によってはRails単体での開発が最適となる可能性もあるため、実務においては柔軟に判断したいと考えます。
+フロントエンドの [「最後に」](https://github.com/init-tshirai/portfolio-frontend/#%E6%9C%80%E5%BE%8C%E3%81%AB)
+ を参照してください。

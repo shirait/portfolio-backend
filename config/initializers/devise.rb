@@ -313,17 +313,15 @@ Devise.setup do |config|
     # JWTに署名する秘密鍵を指定する。
     jwt.secret = Rails.application.credentials.devise_jwt_secret_key
 
-=begin
-    # sessions#create 以外でjwtを発行したいリクエストがある場合、dispatch_requestsに指定する。
+    # JTWを発行するリクエストを明示する。（deviseの初期設定と変わらないが、わかりやすさのため）
     jwt.dispatch_requests = [
       [ "POST", %r{^/auth/sign_in$} ]
     ]
 
-    # sessions#destroy 以外でjwtを無効化したいリクエストがある場合、revocation_requestsに指定する。
+    # JTWを無効化するリクエストを明示する。（deviseの初期設定と変わらないが、わかりやすさのため）
     jwt.revocation_requests = [
       [ "DELETE", %r{^/auth/sign_out$} ]
     ]
-=end
 
     # JWTの有効期限を指定する。
     jwt.expiration_time = 1.day.to_i

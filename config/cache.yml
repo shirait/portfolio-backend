@@ -11,6 +11,6 @@ development:
 test:
   <<: *default
 
+# Supabase は 1 プロジェクト 1 DB のため、cache 用 DB は使わない（production.rb で :memory_store を指定）。
 production:
-  database: cache
   <<: *default

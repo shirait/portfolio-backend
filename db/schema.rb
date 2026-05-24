@@ -11,7 +11,10 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.1].define(version: 2026_05_14_061857) do
-  create_table "comments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
+
+  create_table "comments", force: :cascade do |t|
     t.text "content", null: false
     t.datetime "created_at", null: false
     t.bigint "task_id", null: false
@@ -22,7 +25,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_14_061857) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "tasks", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "tasks", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
     t.datetime "due_date"
@@ -34,7 +37,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_14_061857) do
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
-  create_table "users", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false

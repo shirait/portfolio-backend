@@ -35,7 +35,7 @@ URL: https://portfolio-frontend-self-psi.vercel.app/ <br>
   - [ローカル環境でのセットアップ](#ローカル環境でのセットアップ)
     - [前提](#前提)
     - [手順](#手順)
-  - [デプロイ（Railway）](#デプロイrailway)
+  - [デプロイ（Render）](#デプロイrender)
   - [テスト](#テスト)
   - [最後に](#最後に)
 
@@ -61,7 +61,7 @@ flowchart LR
 
   subgraph Backend["API サーバー"]
     Rails["Rails API\n(本リポジトリ)"]
-    DB[(MySQL)]
+    DB[(PostgreSQL)]
   end
 
   Browser --> Next
@@ -261,7 +261,7 @@ bodyはタスク配列のみ。メタ情報はheaderで返します。
 | 技術 | 選定理由 |
 | ----------------------- | ---------------------------------------------------------------------- |
 | **Rails 8（API モード）** | REST API を素早く構築できる。優秀なORマッパーであるActive Recordが利用でき、バリデーション・トランザクション等を容易に実装できる。ドキュメントも豊富。 |
-| **MySQL**                 | 実務でも多く利用される定番のRDB。 |
+| **PostgreSQL**            | 実務でも多く利用される定番のRDB。RenderやSupabaseといったDBのホスティングサービスと相性が良く、サイトの外部公開が容易。 |
 | **Devise + devise-jwt**   | APIとして利用するため、将来的にスケールできるようJWTを選択。（認証の失効はjtiで実現。） |
 | **CanCanCan**             | ロールごとの認可をシンプルに記述可能 |
 
@@ -273,7 +273,7 @@ bodyはタスク配列のみ。メタ情報はheaderで返します。
 ### 前提
 
 - Ruby 3.4.9
-- MySQL
+- PostgreSQL
 - Bundler
 - [portfolio-frontend](https://github.com/init-tshirai/portfolio-frontend) のセットアップおよび起動（`http://localhost:3000`）
 
@@ -315,7 +315,7 @@ $ bin/rails server -p 3001
 
 ---
 
-## デプロイ（Railway）
+## デプロイ（Render）
 
 （デプロイ方法調査中）
 

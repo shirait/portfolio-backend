@@ -6,7 +6,7 @@
 ## デモ環境
 URL: https://portfolio-frontend-self-psi.vercel.app/ <br>
 メールアドレス: `normal@example.com` <br>
-パスワード: `password`
+パスワード: `faipheiz4ieY`
 
 ※上記はフロントエンドのURLになります。<br>
 バックエンドのURLは公開していません。（API単体での利用は想定していないため）

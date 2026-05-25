@@ -109,8 +109,8 @@ $ bin/rails server -p 3001
 
 ブラウザで `http://localhost:3000` を開きます。
 
-以下でログインに成功したら成功です。
-メールアドレス: normal@example.com
+以下でログインに成功したら成功です。<br>
+メールアドレス: normal@example.com<br>
 パスワード: password
 
 ---

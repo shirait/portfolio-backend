@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-users = User.where(role: [:normal, :admin]).order(:id).to_a
+users = User.where(role: [ :normal, :admin ]).order(:id).to_a
 
 raise "Task seeds require users. Run db/seeds/development/01users.rb first." if users.empty?
 

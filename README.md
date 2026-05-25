@@ -1,22 +1,20 @@
-# Portfolio Backend
+# タスク管理アプリ（バックエンド）
+
+## 概要
 
 タスク管理アプリのバックエンド(Rails API)です。<br>
 [フロントエンド（Next.js）](https://github.com/init-tshirai/portfolio-frontend) と組み合わせて利用します。
 
-## デモ環境
 URL: https://portfolio-frontend-self-psi.vercel.app/ <br>
 メールアドレス: `normal@example.com` <br>
 パスワード: `faipheiz4ieY`
-
-※上記はフロントエンドのURLになります。<br>
-バックエンドのURLは公開していません。（API単体での利用は想定していないため）
 
 ---
 
 ## 目次
 
-- [Portfolio Backend](#portfolio-backend)
-  - [デモ環境](#デモ環境)
+- [タスク管理アプリ（バックエンド）](#タスク管理アプリバックエンド)
+  - [概要](#概要)
   - [目次](#目次)
     - [使用技術](#使用技術)
   - [アーキテクチャ](#アーキテクチャ)
@@ -35,7 +33,6 @@ URL: https://portfolio-frontend-self-psi.vercel.app/ <br>
   - [ローカル環境でのセットアップ](#ローカル環境でのセットアップ)
     - [前提](#前提)
     - [手順](#手順)
-  - [デプロイ（Render）](#デプロイrender)
   - [テスト](#テスト)
   - [最後に](#最後に)
 
@@ -68,8 +65,6 @@ flowchart LR
   Next -->|"Bearer JWT\n"| Rails
   Rails --> DB
 ```
-
-
 
 ### 認証・認可の流れ
 
@@ -140,7 +135,6 @@ erDiagram
 
 ### 認証（Devise JWT）
 
-
 | メソッド     | パス               | 説明                                           |
 | -------- | ---------------- | -------------------------------------------- |
 | `POST`   | `/auth/sign_in`  | ログイン。レスポンスヘッダー `Authorization: Bearer <JWT>` |
@@ -160,10 +154,7 @@ erDiagram
 
 ### API v1
 
-いずれも `Authorization: Bearer <JWT>` が必要（profile / tasks / users）。
-
 #### Profile
-
 
 | メソッド  | パス                | 説明            |
 | ----- | ----------------- | ------------- |
@@ -190,7 +181,6 @@ erDiagram
 
 #### Tasks
 
-
 | メソッド     | パス                  | 説明              |
 | -------- | ------------------- | --------------- |
 | `GET`    | `/api/v1/tasks`     | 一覧（検索・ページネーション） |
@@ -199,9 +189,7 @@ erDiagram
 | `PATCH`  | `/api/v1/tasks/:id` | 更新（コメント付き履歴）    |
 | `DELETE` | `/api/v1/tasks/:id` | 削除              |
 
-
 **一覧クエリパラメータ**
-
 
 | パラメータ           | 説明                    |
 | --------------- | --------------------- |
@@ -272,9 +260,8 @@ bodyはタスク配列のみ。メタ情報はheaderで返します。
 
 ### 前提
 
-- Ruby 3.4.9
-- PostgreSQL
-- Bundler
+- Ruby3.4.9のインストール
+- PostgreSQLのインストール
 - [portfolio-frontend](https://github.com/init-tshirai/portfolio-frontend) のセットアップおよび起動（`http://localhost:3000`）
 
 ### 手順
@@ -311,13 +298,6 @@ $ bin/rails server -p 3001
 以下でログインに成功したら成功です。
 メールアドレス: normal@example.com
 パスワード: password
-
-
----
-
-## デプロイ（Render）
-
-（デプロイ方法調査中）
 
 ---
 

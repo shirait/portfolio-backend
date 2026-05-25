@@ -46,6 +46,8 @@ URL: https://portfolio-frontend-self-psi.vercel.app/ <br>
 
 ## アーキテクチャ
 
+本番環境ではAPIサーバーとDBサーバーを分離して運用しています。
+
 ```mermaid
 flowchart LR
   subgraph Client["クライアント"]
@@ -56,13 +58,16 @@ flowchart LR
     Next["Next.js"]
   end
 
-  subgraph Backend["API サーバー"]
+  subgraph APIServer["API サーバー（Render）"]
     Rails["Rails API\n(本リポジトリ)"]
+  end
+
+  subgraph DBServer["DB サーバー（Supabase）"]
     DB[(PostgreSQL)]
   end
 
   Browser --> Next
-  Next -->|"Bearer JWT\n"| Rails
+  Next -->|"Bearer JWT"| Rails
   Rails --> DB
 ```
 
@@ -116,17 +121,13 @@ erDiagram
   }
 ```
 
-
-
 ### ロールと権限（CanCanCan）
-
 
 | role     | 権限            |
 | -------- | ------------- |
 | `normal` | `Task` の CRUD |
 | `admin`  | すべてのリソースを管理   |
 | `viewer` | `Task` の閲覧のみ  |
-
 
 ---
 

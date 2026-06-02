@@ -4,6 +4,14 @@ class Api::V1::TasksController < ApplicationController
   DEFAULT_PAGE = 1
   DEFAULT_LIMIT = 20
   MAX_LIMIT = 100
+  SORTABLE_COLUMNS = {
+    "id" => "tasks.id",
+    "title" => "tasks.title",
+    "status" => "tasks.status",
+    "due_date" => "tasks.due_date",
+    "user" => "tasks.user_id"
+  }.freeze
+  DEFAULT_SORT_OPTION = { due_date: :desc }
 
   # before_action :authenticate_user!
   # 認証は load_and_authorize_resource で行う
@@ -13,12 +21,13 @@ class Api::V1::TasksController < ApplicationController
   end
 
   def index
-    tasks = Task.preload(:user).order(due_date: :desc)
+    tasks = Task.preload(:user)
      .search_by_title(params[:title])
      .search_by_status(params[:status])
      .search_by_due_date_from(due_date_from)
      .search_by_due_date_to(due_date_to)
      .search_by_user_id(params[:user_id])
+     .order(sort_option)
 
     total_count = tasks.count
     current_page = page_param
@@ -144,5 +153,15 @@ class Api::V1::TasksController < ApplicationController
     Date.iso8601(params[:due_date_to])
   rescue Date::Error
     raise ActionController::BadRequest, "Invalid due_date_to: #{params[:due_date_to]}"
+  end
+
+  def sort_option
+    return DEFAULT_SORT_OPTION if params[:sort_column].blank?
+
+    column = params[:sort_column]
+    return DEFAULT_SORT_OPTION unless SORTABLE_COLUMNS.key?(column)
+
+    direction = params[:sort_direction].to_s.downcase == "desc" ? :desc : :asc
+    "#{SORTABLE_COLUMNS.fetch(column)} #{direction}"
   end
 end

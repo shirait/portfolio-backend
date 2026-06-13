@@ -58,30 +58,8 @@
 - JWT 認証を httpOnly Cookie 経由で扱い、Server Component から安全に API を呼び出す構成としたこと。
 - CanCanCan によるロールベースの認可と、画面・API 双方での権限チェックを行っていること。
 
-  Rails の gem である CanCanCan で、ロールベースの認可を `Ability` クラスに集約しました。`admin` / `normal` / `viewer` ごとの権限が1ファイルで把握でき、変更もしやすくなっています。
+  Rails の gem である CanCanCan で、ロールベースの認可を [Ability](https://github.com/init-tshirai/portfolio-backend/blob/master/app/models/ability.rb) クラスに集約しました。`admin` / `normal` / `viewer` ごとの権限が1ファイルで把握でき、変更もしやすくなっています。
 
-  ```ruby
-  class Ability
-    include CanCan::Ability
-
-    def initialize(user)
-      return if user.blank?
-      send("#{user.role}_abilities", user)
-    end
-
-    def admin_abilities(user)
-      can :manage, :all
-    end
-
-    def normal_abilities(user)
-      can :manage, Task
-    end
-
-    def viewer_abilities(user)
-      can :read, Task
-    end
-  end
-  ```
 
   さらに、権限チェックのタイミングを二段構えにしています。
 

@@ -1,6 +1,6 @@
 # タスク管理アプリ — システム概要
 
-![Ruby](https://img.shields.io/badge/Ruby-3.4.9-CC342D?logo=ruby&logoColor=white)
+![Ruby](https://img.shields.io/badge/Ruby-4.0.5-CC342D?logo=ruby&logoColor=white)
 ![Rails](https://img.shields.io/badge/Rails-8-CC0000?logo=rubyonrails&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next.js-16-000000?logo=next.js&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)

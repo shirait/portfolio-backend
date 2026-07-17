@@ -42,7 +42,7 @@
 
 | 項目 | 内容 |
 |------|------|
-| URL | https://portfolio-frontend-self-psi.vercel.app/ |
+| URL | https://portfolio-frontend-one-topaz.vercel.app/ |
 | メールアドレス | `normal@example.com` |
 | パスワード | `faipheiz4ieY` |
 

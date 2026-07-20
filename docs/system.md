@@ -13,8 +13,8 @@
 
 フロントエンド（Next.js）とバックエンド（Rails API）で構成されるタスク管理アプリの全体ドキュメントです。
 
-- [フロントエンド](https://github.com/init-tshirai/portfolio-frontend)
-- [バックエンド](https://github.com/init-tshirai/portfolio-backend)
+- [フロントエンド](https://github.com/shirait/portfolio-frontend)
+- [バックエンド](https://github.com/shirait/portfolio-backend)
 
 ---
 
@@ -48,8 +48,8 @@
 
 ローカル環境のセットアップは、各リポジトリの README を参照してください。
 
-- [フロントエンド README — ローカルセットアップ](https://github.com/init-tshirai/portfolio-frontend#ローカル環境でのセットアップ)
-- [バックエンド README — ローカルセットアップ](https://github.com/init-tshirai/portfolio-backend#ローカル環境でのセットアップ)
+- [フロントエンド README — ローカルセットアップ](https://github.com/shirait/portfolio-frontend#ローカル環境でのセットアップ)
+- [バックエンド README — ローカルセットアップ](https://github.com/shirait/portfolio-backend#ローカル環境でのセットアップ)
 
 ---
 

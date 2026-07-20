@@ -1,6 +1,6 @@
 # タスク管理アプリ（バックエンド）
 
-Rails API です。[フロントエンド（Next.js）](https://github.com/init-tshirai/portfolio-frontend) と組み合わせて利用します。
+Rails API です。[フロントエンド（Next.js）](https://github.com/shirait/portfolio-frontend) と組み合わせて利用します。
 
 **システム全体の説明（デモ URL・使用技術・認証・API 設計など）は [docs/system.md](./docs/system.md) を参照してください。**
 
@@ -23,7 +23,7 @@ Rails API です。[フロントエンド（Next.js）](https://github.com/init-
 
 - Ruby 4.0.5 のインストール
 - PostgreSQL のインストール
-- [portfolio-frontend](https://github.com/init-tshirai/portfolio-frontend) のセットアップおよび起動（`http://localhost:3000`）
+- [portfolio-frontend](https://github.com/shirait/portfolio-frontend) のセットアップおよび起動（`http://localhost:3000`）
 
 ### 手順
 

@@ -16,7 +16,7 @@ Rails.application.configure do
 
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
 
-  config.silence_healthcheck_path = "/up"
+  config.silence_healthcheck_path = ["/up", "/warmup"]
 
   config.active_support.report_deprecations = false
 

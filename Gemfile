@@ -63,3 +63,5 @@ gem "devise-jwt"
 
 # 認可
 gem "cancancan"
+
+gem "rack-attack"

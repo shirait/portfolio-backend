@@ -12,7 +12,7 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   config.log_tags = [ :request_id ]
-  config.logger   = ActiveSupport::TaggedLogging.logger(STDOUT)
+  config.logger   = ActiveSupport::Logger.new("log/production.log")
 
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
 

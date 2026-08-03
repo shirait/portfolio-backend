@@ -1,8 +1,9 @@
-# config valid for current version and patch releases of Capistrano
+# capistranoでデプロイする場合、サーバーの設定に合わせて本ファイルを修正してください。
+
 lock "~> 3.20.1"
 
-set :application, "my_app_name"
-set :repo_url, "git@example.com:me/my_repo.git"
+set :application, "portfolio-backend"
+set :repo_url, "git@github.com:shirait/portfolio-backend.git"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp

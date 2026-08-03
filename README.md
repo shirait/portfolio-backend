@@ -21,7 +21,7 @@ Rails API です。[フロントエンド（Next.js）](https://github.com/shira
 
 ### 前提
 
-- Ruby 4.0.5 のインストール
+- Ruby 4.0.6 のインストール
 - PostgreSQL のインストール
 - [portfolio-frontend](https://github.com/shirait/portfolio-frontend) のセットアップおよび起動（`http://localhost:3000`）
 
